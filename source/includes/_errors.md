@@ -1,20 +1,27 @@
 # Errors
 
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
-
-The Kittn API uses the following error codes:
+The Finsify API uses the following error codes:
 
 
-Error Code | Meaning
----------- | -------
-400 | Bad Request -- Your request sucks.
-401 | Unauthorized -- Your API key is wrong.
-403 | Forbidden -- The kitten requested is hidden for administrators only.
-404 | Not Found -- The specified kitten could not be found.
-405 | Method Not Allowed -- You tried to access a kitten with an invalid method.
-406 | Not Acceptable -- You requested a format that isn't json.
-410 | Gone -- The kitten requested has been removed from our servers.
-418 | I'm a teapot.
-429 | Too Many Requests -- You're requesting too many kittens! Slow down!
-500 | Internal Server Error -- We had a problem with our server. Try again later.
-503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.
+
+Status Code | Error | Description
+----------- | ----- | -----------
+400 | BadRequest | Invalid Request
+404 | AccountNotFound | Account is not found - Your account request not found in server
+404 | ClientNotFound | Can't find client with your id
+503 | ConnectError | We're temporarily offline. Please try again later.
+400 | ContentInputInvalid | Only allow data type application/json
+400 | CredentialInvalid | Credentials is invalid
+500 | CustomerCreateError | Can't create new customer. Please try later.
+400 | CustomerExists | Your customer is exists
+404 | CustomerNotFound | Can't find your customer.
+400 | DataInvalid | Data is invalid 
+500 | InternalError | Sorry server is crash. Please try again.
+404 | LoginNotFound | Login is not found - Can't find your login in server
+503 | ServerMaintenance | Servers are currently undergoing maintenance. Please try later
+404 | ServiceNotFound | Service is not found - Your service request is not define
+500 | TokenCreateError | Can't create a token. Please try again.
+400 | TokenExpire | Your token is expired. Please create new token.
+
+
+`Status Code` is status in HTTP request.

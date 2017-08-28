@@ -275,7 +275,9 @@ html, body {
   .lang-selector {
     position: fixed;
     z-index: 50;
-    border-bottom: 5px solid $lang-select-active-bg;
+    border-bottom: 3px solid $lang-select-active-bg;
+    height: 50px;
+    padding-left: 24px;
   }
 }
 
@@ -291,6 +293,8 @@ html, body {
     padding: 0 10px;
     line-height: 30px;
     outline: 0;
+    margin: 12px 3px;
+    border-radius: 3px;
 
     &:active, &:focus {
       background-color: $lang-select-pressed-bg;
@@ -530,6 +534,13 @@ html, body {
       color: #fff;
       text-decoration: none;
       border-bottom: dashed 1px #ccc;
+    }
+  }
+
+  blockquote {
+    &>h1, &>h2, &>h3, &>h4, &>h5, &>h6 {
+      padding-left: 12px;
+      margin-top: 12px;
     }
   }
 
