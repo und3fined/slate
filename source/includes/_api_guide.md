@@ -1,7 +1,7 @@
 
 # API Guide
 
-## Tạo khách hàng
+## Create a new customer.
 
 ```shell
 curl -X POST \
@@ -71,13 +71,13 @@ This endpoint allow create a customer.
 
 Parameter | Type | Description
 --------- | ------- | -----------
-identifier | string | Định danh người dùng trên hệ thống của bạn.
+identifier | string | Identify customer on your system.
 
 <aside class="notice">
 Please replace `sample-clientId` and `sample-clientSecret` with your real developer key.
 </aside>
 
-## Tạo token
+## Create a token.
 
 ```shell
 curl -X POST \
@@ -127,7 +127,7 @@ request(options, function (error, response, body) {
 }
 ```
 
-Để có thể kết nối với các dịch vụ của Finsify cung cấp cần có một token.
+To connect with Finsify's services, we will provide a token. 
 
 ### HTTP Request
 
@@ -137,24 +137,24 @@ request(options, function (error, response, body) {
 
 Parameter | Type | Description
 --------- | ---- |-----------
-customer_id | string | Định danh của người dùng trên hệ thống Finsify, có được sau khi tạo khách hàng.
-service_id | integer | Mã dịch vụ Finsify cung cấp. Xem thêm [Danh sách dịch vụ](#d-ch-v)
-callback_url | string | Sau khi kết nối thành công, Finsify sẽ gửi dữ liệu kết nối của người dùng qua URL này.
+customer_id | string | Identify customer on Finsify system, get it after creating new customer.
+service_id | integer | Service ID provided by Finsify. Read more [List of servie] (#services)
+callback_url | string | After successful connect, Finsify will send customer data through this URL. 
 
 ### Response
 
-Với response trả về Developer sử dụng `connect_url` để truy cập vào trang kết nối của Finsify.
+With returned data, Developer use `connect_url` in order to access to Finsify’s website
 
 <aside class="warning">
-Token chỉ dược sử dụng một lần.
+Token is used for 1-time
 </aside>
 <aside class="warning">
-Token bị hết hạn sau 30 phút nếu không được sử dụng.
+Token will be expired after 30 minutes if it is not used.
 </aside>
 
 ## Connect response
 
-Là dữ liệu được trả về qua `callback_url` khi thực hiện kết nối. `callback_url` được khai báo khi thực hiện tạo `token`.
+Data will be sent via `callback_url` when connect. `callback_url` is registered when creating `token`.
 
 > Sample connect successful
 
@@ -166,16 +166,15 @@ Là dữ liệu được trả về qua `callback_url` khi thực hiện kết n
 }
 ```
 
-### Mô tả flow
+### Describe flow
 
-Khi thực hiện kết nối thành công trên trang API connect của Finsify Hub, lúc này Finsify sẽ thực hiện gửi dữ liệu qua webview hoặc trình duyệt web bằng cách redirect tới `callback_url` được khai báo.
+After successful connect on Finsify Website, Finsify will send data via webview or browser by redirecting to registered `callback_url`.
 
-Ví dụ:
+Example:
 
 `yourapp://finsify-hub/{"status":"success","login_id":23456,"secret":"78cea84c-7eb8-4425-2312-3a1ac8383afe"}`
 
-
-## Danh sách tài khoản
+## Account List 
 
 ```shell
 curl -X GET \
@@ -236,7 +235,7 @@ request(options, function (error, response, body) {
 }
 ```
 
-Với API này `developer` có thể lấy được danh sách tài khoản của dịch vụ mà người dùng vừa thực hiện kết nối. 
+With this API, `developer` can get the list of accounts that user has connected.
 
 ### HTTP Request
 
@@ -244,15 +243,15 @@ Với API này `developer` có thể lấy được danh sách tài khoản củ
 
 ### Header Parameters
 
-Trên header của request lúc này thêm `login-secret`. Finsify sẽ dựa trên thông tin này để tìm danh sách tài khoản của người dùng.
+On header of request has `login-secret`. Finsify uses this information to find list account of customer.
 
 Header | Description
 ------ | -----------
-login-secret | Có được sau khi kết nối thành công.
+login-secret | Get it after connecting successfully.
 
 ### Response
 
-Dữ liệu được gửi về có cấu trúc như bảng dưới:
+Structure of data:
 
 Params | Type | Description
 ------ | ---- | -----------
@@ -261,7 +260,7 @@ version | String | Finsify API version
 
 ## Get transactions
 
-API này cho phép `developer` lấy danh sách giao dịch của một tài khoản.
+This API allows `developer` get transactions list of an account
 
 ```shell
 curl -X GET \
@@ -364,9 +363,9 @@ request(options, function (error, response, body) {
 
 Parameters | Type | Description
 ---------- | ---- | -----------
-account_id | integer | Mã tài khoản của khách hàng.
-from_date | date('YYYY-MM-DD') | Ngày bắt đầu lấy giao dịch.
-end_date | date('YYYY-MM-DD') | Ngày kết thúc.
+account_id | integer | Customer account code.
+from_date | date('YYYY-MM-DD') | Starting date.
+end_date | date('YYYY-MM-DD') | Ending date.
 
 ## Webhooks
 
@@ -383,7 +382,7 @@ With webhooks developers don't have to poll continuously to know the status of a
 
 ### Webhooks APIs
 
-Customers can use the following webhooks services...
+Customers can use the following webhooks services
 
 ### Webhooks Supported Events
 
@@ -392,9 +391,9 @@ Customers can use the following webhooks services...
 
 ### New transaction
 
-Khi có phát sinh giao dịch mới Finsify sẽ gửi thông tin giao dịch mới qua webhook endpoint đã được thiết lập trong trang Developer.
+When there is a new transactions, Finsify will send data via webhook endpoint which was set up in Developer profile. 
 
-> Một message thông báo transaction mới.
+> Message notifies a new transaction
 
 ```json
 {
@@ -406,13 +405,13 @@ Khi có phát sinh giao dịch mới Finsify sẽ gửi thông tin giao dịch m
 }
 ```
 
-### Login bị thay đổi trạng thái
+### Login status has changed.
 
 * `login_wrong_credentials` - login changed password.
 * `login_password_expired` - login password is expired.
 * `login_account_locked` - login is locked.
 
-> Ví dụ một message gửi qua webhook thông báo login bị thay đổi trạng thái
+> Example: Send a message via webhook to notify that login status has changed
 
 ```json
 {
@@ -422,15 +421,13 @@ Khi có phát sinh giao dịch mới Finsify sẽ gửi thông tin giao dịch m
 
 ```
 
-`login_wrong_credentials` xảy ra khi tài khoản của người dùng bị đổi mật khẩu.
-`login_password_expired` mật khẩu của tài khoản đã bị hết hạn sử dụng, người dùng cần truy cập trang internet banking  hoặc gọi đến tổng tài của bank để thực hiện đổi mật khẩu
-`login_account_locked` tài khoản của người dùng đã bị khoá. Người dùng cần liên hệ với ngân hàng để được hỗ trợ.
-
-
+`login_wrong_credentials` account password has been changed.
+`login_password_expired` Account passoword has been expired. User need to access to Internet Banking or Call to Support center to change the password.
+`login_account_locked` Account has been locked. User should contact banks to get support.
 
 ## Reconnect
 
-Sử dụng khi người dùng cần đăng nhập lại tài khoản, ví dụ như người dùng đã đổi mật khẩu tài khoản internet banking.
+Use to request user to re-login, for example account password of Internet banking has been changed. 
 
 ```shell
 curl -X POST \
@@ -486,11 +483,11 @@ request(options, function (error, response, body) {
 
 Parameters | Type | Description
 ---------- | ---- | -----------
-callback_url | string | Sau khi kết nối thành công, Finsify sẽ gửi dữ liệu kết nối của người dùng qua URL này.
+callback_url | string | After connect successfull, Finsify will send data of user through this URL.
 
 ## Active/Inactive login
 
-API này hỗ trợ đối tác của Finsify Hub có thể chủ động thay đổi trạng thái của login của người dùng.
+That API allows Finsify partners to change Login status of users.
 
 ```shell
 curl -X PUT \
@@ -553,7 +550,7 @@ or
 
 ## Refresh login
 
-Khi người dùng không được cập nhật giao dịch, `refresh login` sẽ hỗ trợ lấy lại giao dịch.
+If user does not update transactions, `refresh login` will support to get transactions
 
 ```shell
 curl -X PUT \

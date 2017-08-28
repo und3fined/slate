@@ -2,8 +2,6 @@
 
 The Finsify API uses the following error codes:
 
-
-
 Status Code | Error | Description
 ----------- | ----- | -----------
 400 | BadRequest | Invalid Request

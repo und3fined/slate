@@ -1,5 +1,5 @@
 ---
-title: Finsify API Reference
+title: Finsify API Guidelines
 
 language_tabs:
   - shell: cURL
@@ -29,21 +29,21 @@ Welcome to the Finsify API! Our API allows you to easily access your Finsify Hub
 
 Our API is RESTful, we use JSON format.
 
-## Định nghĩa
+## Definantion
 
-Finsify Hub có một số định nghĩa mà đối tác cần hiểu.
+Please read the terms of Finsify Hub's documents 
 
-`Customer` Đây là định danh người dùng trên hệ thống của Finsify. Đối tác cần lưu trữ thông tin này, Finsify chỉ cấp một lần.
+`Customer` identify a user on Finsify system. Partners need to store this information because it is only provided once.
 
-`Token` Là một mã duy nhất để thực hiện một kết nối với Finsify. Nó sử dụng khi khách hàng của đối tác cần liên kết với một dịch vụ mà Finsify cung cấp.
+`Token` is one code to make the connection with Finsify. It is used when partner needs to connect with a service provided by Finsify.
 
-`Login` Có thể hiểu là một tài khoản đăng nhập của khách hàng trên hệ thống Finsify Hub.
+`Login` could be known as an account of customer which was logged in on Finsify Hub system. 
 
-`Account` Một `login` có thể có nhiều account, ví dụ như một tài khoản internet banking của ngân hàng, trong đó có thể chứa nhiều loại tài khoản ngân hàng, mỗi tài khoản trong đó lại có số dư và lịch sử giao dịch khác nhau.
+`Account` One `login` could include several accounts. For example, one internet bank account could be accessed to different accounts such as current account, saving account, credit card which have different balance and transaction history.
 
-`Transaction` Nó cung cấp các thông tin về giao dịch của mỗi `account.
+`Transaction` it provides information of each transaction from each `account`.
 
-`Service` Là các dịch vụ do Finsify Hub hỗ trợ, nó có thể là một dịch vụ thương mại điện tử, tổ chức tài chính. Ví dụ như Paypal, SeABank, VPBank...
+`Service` is service provided by Finsify Hub. It could be an ecommerce website, financial institution such as Paypal, Vietcombank, Maybank, etc.
 
 # Authentication
 
@@ -51,23 +51,23 @@ Authenticate your account when using the API by including your secret API key in
 
 ## HTTP Header
 
-Để truy cập được vào hệ thống của Finsify trên Header của HTTP request luôn cần 2 header `Client-Id` và `Service-secret`(hoặc `App-secret`).
+To access to Finsify system, Header of HTTP request must contain 2 headers `Client-Id` and`Service-secret`(or `App-secret`).
 
 ### Mô tả
 
 Header | Required | Description
 ------ | ---- | -----------
-Client-Id | yes | Finsify định danh `Developer` qua client-id này.
-Service-secret | yes | Sử dụng cho các dịch vụ trên nền web.
-App-secret | yes | Sử dụng cho các ứng dụng di động.
+Client-Id | yes | Finsify identifies `partner` by client-id .
+Service-secret | yes | Use for web-based service.
+App-secret | yes | Use for mobile applications.
 
 <aside class="notice">
-Nếu developer sử dụng Finsify cho các ứng dụng di động thì sử dụng App-secret thay thế cho Service-secret và ngược lại. Không được sử dụng Service-secret và App-secret trong cùng 1 request.
+In case developer uses Finsify for mobile application, please use App-secret instead of Service-secret. Notice that you can not use Service-secret and App-secret simultaneously in one request.
 </aside>
 
 ## Sample
 
-Ví dụ một request lên hệ thống của Finsify.
+An example of a request to Finsify system:
 
 > NodeJS code
 
@@ -220,22 +220,22 @@ NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
 
 ### Flow
 
-1. Đăng ký một tài khoản nhà phát triển.
-2. Tạo một khách hàng để Finsify có thể xác định ai đang sử dụng dịch vụ.
-3. Chọn một dịch vụ Finsify cung cấp.
-4. Yêu cầu tạo một token để có thể truy cập vào dịch vụ mà Finsify cung cấp.
-5. Nhập thông tin đăng nhập của dịch vụ.
-6. Chờ tiến trình xử lý, và nhận dữ liệu thông qua các API
+1. Register for an Developer account 
+2. Create a new customer to let Finsify know who is using service
+3. Select a service 
+4. Request to create a token to access to services provided by Finsify 
+5. Enter login information of selected service 
+6. Wait for process to finish and receive data via APIs
 
-## Dịch vụ
+## Services
 
-Danh sách dịch vụ mà Finsify Hub cung cấp có thể truy cập qua URL:
+You can access to the list of service provided by Finsify.
 
 ### HTTP Request
 
 `GET https://assets.finsify.com/service.json`
 
-> Cấu trúc của 1 service
+> Structure of a service
 
 ```json
 {
@@ -257,37 +257,37 @@ Danh sách dịch vụ mà Finsify Hub cung cấp có thể truy cập qua URL:
 }
 ```
 
-### Mô tả cấu trúc
+### Structure description 
 
 Key | Type | Description
 --- | ---- | -----------
-id | integer | Mã dịch vụ
-name | string | Tên của dịch vụ mà Finsify Hub cung cấp
-provider | string | Tên đối tác Finsify Hub hợp tác. `Finsify` là do chính Finsify Hub triển khai.
-media_path | string | Đường dẫn tới các file ảnh của dịch vụ.
-cover_file_name | string | tên file cover. Một cover luôn có 3 size là `small`, `medium` và `large`.
-logo_file_name | string | tên file logo
-color | object | mã màu của dịch vụ.
-type | string | loại dịch vụ mà Finsify Hub cung cấp. Hiện tại Finsify hỗ trợ các loại là `bank` và `other`
-country_code | string | đây là mã quốc gia của dịch vụ
-has_balance | boolean | dịch vụ này có sẵn số dư hay không
-call_to_action | object | nếu không có call to action thì value là `NULL`
+id | integer | Service ID
+name | string | Name of service provided by Finsify  Hub
+provider | string | Name of Finsify's partner. `finsify` is deploy by Finsify Hub.
+media_path | string | URL to link of service's images.
+cover_file_name | string | Cover file name. A cover always has 3 sizes: `small`, `medium` và `large`.
+logo_file_name | string | Logo file's name
+color | object | Colour code of service.
+type | string | The type of services provided by Finsify Hub. Finsify currently supports `bank`, `statement` and `other`.
+country_code | string | Service's country code. 
+has_balance | boolean | Does service have available balance?
+call_to_action | object | If no `call_to_action`, value is `NULL`
 
-> Ví dụ một call to action
+> Example of Call to action 
 
 ```json
 "call_to_action": {
-    "prompt": "Chưa có tài khoản?",
-    "text": "Đăng ký ngay!",
+    "prompt": "No account yet?",
+    "text": "Register now!",
     "url": "https://example.com/register-account"
 }
 ```
 
-### Lưu ý về `media_path`
+### Note about `media_path`
 
-Để có được 1 url hoàn chỉnh của ảnh cover hoặc logo thì cần ghép chuỗi `media_path` với `cover_file_name` hoặc `logo_file_name`.
+To have a complete url of cover or logo image, it should be merged string `media-path` with `cover_file_name` or `logo_file_name`. 
 
-Với `cover_file_name` để có một URL hợp lệ sẽ bao gồm cả kích thước. Ví dụ:
+In order to have a valid URL, `cover_file_name` must contain size. Example: 
 
 `https://assets.finsify.com/services/ambank-cover-medium.png`
 
