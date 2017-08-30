@@ -11,6 +11,7 @@ toc_footers:
 includes:
   - api_guide
   - errors
+  - white_paper
 
 search: true
 ---
